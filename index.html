@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResponsiveVoice Example</title>
+  <script>
+    const apiKey = 'YOUR_RESPONSIVEVOICE_API_KEY';
+
+    function synthesizeSpeech() {
+      const textToRead = document.getElementById('textInput').value;
+
+      fetch(`https://api.responsivevoice.org/v1/text:synthesize?key=${apiKey}&src=${encodeURIComponent(textToRead)}`)
+        .then(response => response.json())
+        .then(data => {
+          const audioElement = new Audio(data.url);
+          audioElement.play();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  </script>
+</head>
+<body>
+  <form id="textForm">
+    <label for="textInput">Enter Text:</label>
+    <input type="text" id="textInput" name="textInput" required>
+    <button type="button" onclick="synthesizeSpeech()">Read Aloud</button>
+  </form>
+
+  <audio controls id="audioPlayer">
+    <!-- This is where the audio will be displayed -->
+  </audio>
+</body>
+</html>
