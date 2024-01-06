@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ResponsiveVoice Example</title>
-  <script>
-    const apiKey = '1WfYam8C';
-
-    function synthesizeSpeech() {
-      const textToRead = document.getElementById('textInput').value;
-
-      fetch(`https://api.responsivevoice.org/v1/text:synthesize?key=${apiKey}&src=${encodeURIComponent(textToRead)}`)
-        .then(response => response.json())
-        .then(data => {
-          const audioElement = new Audio(data.url);
-          audioElement.play();
-        })
-        .catch(error => console.error('Error:', error));
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รับข้อมูลจากผู้ใช้</title>
 </head>
 <body>
-    <script src="https://code.responsivevoice.org/responsivevoice.js?key=1WfYam8C"></script>
-  <form id="textForm">
-    <label for="textInput">Enter Text:</label>
-    <input type="text" id="textInput" name="textInput" required>
-    <button type="button" onclick="synthesizeSpeech()">Read Aloud</button>
-  </form>
+    
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // รับข้อมูลจากฟอร์ม
+    $userData = $_POST['userData'];
 
-  <audio controls id="audioPlayer">
-    <!-- This is where the audio will be displayed -->
-  </audio>
+    // ทำอะไรกับข้อมูล เช่น บันทึกลงฐานข้อมูล, แสดงผล, เป็นต้น
+    echo "ข้อมูลที่ได้รับ: " . $userData;
+}
+?>
+
+    <form id="myForm">
+        <label for="userData">กรอกข้อมูล:</label>
+        <input type="text" id="userData" name="userData">
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+        function submitForm() {
+            var userData = document.getElementById('userData').value;
+            // เรียกฟังก์ชั่นที่จะดำเนินการกับข้อมูลที่ได้รับ
+            processData(userData);
+        }
+
+        function processData(data) {
+            // นำข้อมูลไปทำอะไรต่อ เช่น ส่งไปที่เซิร์ฟเวอร์, แสดงผล, เป็นต้น
+            console.log("ข้อมูลที่ได้รับ: " + data);
+            // ส่งข้อมูลไปที่เซิร์ฟเวอร์หรือทำการประมวลผลต่อไป
+            // เช่นโดยใช้ AJAX หรือ Fetch API
+        }
+    </script>
+ 
 </body>
 </html>
+
